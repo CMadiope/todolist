@@ -1,8 +1,14 @@
 import React, { useReducer, createContext } from "react";
 import ToDoList from "./components/ToDoList";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function todosReducer(state, action) {
   switch (action.type) {
+    case "delete":
+      const filteredTodoState = state.todos.filter(
+        (todo) => todo.id !== action.payload.id
+      );
+      return { ...state, todos: filteredTodoState };
     default:
       return todosInitialState;
   }
@@ -18,12 +24,12 @@ const todosInitialState = {
   ],
 };
 function App() {
-  const[state, dispatch] = useReducer(todosReducer, todosInitialState)
+  const [state, dispatch] = useReducer(todosReducer, todosInitialState);
   return (
-  <TodosContext.Provider value={{state, dispatch}}>
-    <ToDoList/>
-  </TodosContext.Provider>
-  )
+    <TodosContext.Provider value={{ state, dispatch }}>
+      <ToDoList />
+    </TodosContext.Provider>
+  );
 }
 
 export default App;
