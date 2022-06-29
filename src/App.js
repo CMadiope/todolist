@@ -1,4 +1,5 @@
 import React, { useReducer, createContext } from "react";
+import ToDoList from "./components/ToDoList";
 
 function todosReducer(state, action) {
   switch (action.type) {
@@ -17,7 +18,12 @@ const todosInitialState = {
   ],
 };
 function App() {
-  return <div className='App'></div>;
+  const[state, dispatch] = useReducer(todosReducer, todosInitialState)
+  return (
+  <TodosContext.Provider value={{state, dispatch}}>
+    <ToDoList/>
+  </TodosContext.Provider>
+  )
 }
 
 export default App;
