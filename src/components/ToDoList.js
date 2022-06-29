@@ -11,16 +11,14 @@ const ToDoList = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(editMode){ 
-dispatch({type: 'edit', payload:{...editTodo,text:todoText}})
-setEditMode(false)
-setEditTodo(null)
-}
-else{
-dispatch({type: 'add', payload: todoText})
-} 
-setTodoText("")
-}
+    if (editMode) {
+      dispatch({ type: "edit", payload: { ...editToDo, text: todoText } });
+      setEditMode(false);
+      setEditToDo(null);
+    } else {
+      dispatch({ type: "add", payload: todoText });
+    }
+    setTodoText("");
   };
 
   return (
