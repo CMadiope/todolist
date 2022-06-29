@@ -33,11 +33,7 @@ function todosReducer(state, action) {
 export const TodosContext = createContext();
 
 const todosInitialState = {
-  todos: [
-    { id: 1, text: "finish writing code" },
-    { id: 2, text: "play a video game" },
-    { id: 3, text: "read a novel" },
-  ],
+  todos: []
 };
 function App() {
   const [state, dispatch] = useReducer(todosReducer, todosInitialState);
