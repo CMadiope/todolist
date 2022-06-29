@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { TodosContext } from "../App";
 import { Table, Form, Button } from "react-bootstrap";
 import useAPI from "./useAPI";
+import axios from "axios";
 
 const ToDoList = () => {
   const { state, dispatch } = useContext(TodosContext);
@@ -64,7 +65,12 @@ const ToDoList = () => {
               >
                 Edit
               </td>
-              <td onClick={() => dispatch({ type: "delete", payload: todo })}>
+              <td
+                onClick={async () => {
+                  await axios.delete(endpoint + todo.id);
+                  dispatch({ type: "delete", payload: todo });
+                }}
+              >
                 Delete
               </td>
             </tr>
