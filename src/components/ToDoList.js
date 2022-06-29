@@ -1,14 +1,21 @@
 import React, { useContext, useState } from "react";
 import { TodosContext } from "../App";
 import { Table, Form, Button } from "react-bootstrap";
+import { getByDisplayValue } from "@testing-library/react";
 
 const ToDoList = () => {
   const { state, dispatch } = useContext(TodosContext);
   const [todoText, setTodoText] = useState("");
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch({ type: "add", payload: todoText });
+    setTodoText("");
+  };
+
   return (
     <div>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Form.Group controlled='formBasicEmail'>
           <Form.Control
             type='text'
@@ -16,6 +23,9 @@ const ToDoList = () => {
             onChange={(event) => setTodoText(event.target.value)}
           />
         </Form.Group>
+        <Button variant='primary' type='submit'>
+          Submit
+        </Button>
       </Form>
       <Table striped bordered hover>
         <thead>
