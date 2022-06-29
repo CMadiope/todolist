@@ -1,9 +1,15 @@
 import React, { useReducer, createContext } from "react";
 import ToDoList from "./components/ToDoList";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { v4 as uuidv4 } from "uuid";
 
 function todosReducer(state, action) {
   switch (action.type) {
+    case "add":
+      const newToDo = { id: uuidv4(), text: action.payload };
+      const addedToDos = [...state.todos, newToDo];
+      return { ...state, todos: addedToDos };
+
     case "delete":
       const filteredTodoState = state.todos.filter(
         (todo) => todo.id !== action.payload.id
