@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 
 function todosReducer(state, action) {
   switch (action.type) {
+    case "get":
+      return { ...state, todos: action.payload };
+
     case "add":
       const newToDo = { id: uuidv4(), text: action.payload };
       const addedToDos = [...state.todos, newToDo];
@@ -33,7 +36,7 @@ function todosReducer(state, action) {
 export const TodosContext = createContext();
 
 const todosInitialState = {
-  todos: []
+  todos: [],
 };
 function App() {
   const [state, dispatch] = useReducer(todosReducer, todosInitialState);
