@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { TodosContext } from "../App";
 import { Table, Form, Button } from "react-bootstrap";
+import useAPI from "./useAPI";
 
 const ToDoList = () => {
   const { state, dispatch } = useContext(TodosContext);
@@ -8,6 +9,13 @@ const ToDoList = () => {
   const [editMode, setEditMode] = useState(false);
   const [editToDo, setEditToDo] = useState(null);
   const buttonTitle = editMode ? "Edit" : "Add";
+
+  const endpoint = 'http://localhost:3000/todos'
+  const savedTodos = useAPI(endpoint)
+
+  useEffect(() =>{
+    dispatch({type:'get', payload:savedTodos})
+  },[savedTodos])
 
   const handleSubmit = (event) => {
     event.preventDefault();
