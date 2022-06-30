@@ -3,6 +3,7 @@ import { TodosContext } from "../App";
 import { Table, Form, Button } from "react-bootstrap";
 import useAPI from "./useAPI";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const ToDoList = () => {
   const { state, dispatch } = useContext(TodosContext);
@@ -11,21 +12,24 @@ const ToDoList = () => {
   const [editToDo, setEditToDo] = useState(null);
   const buttonTitle = editMode ? "Edit" : "Add";
 
-  const endpoint = 'http://localhost:3000/todos'
-  const savedTodos = useAPI(endpoint)
+  const endpoint = "http://localhost:8000/todos";
+  const savedTodos = useAPI(endpoint);
 
-  useEffect(() =>{
-    dispatch({type:'get', payload:savedTodos})
-  },[savedTodos])
+  useEffect(() => {
+    dispatch({ type: "get", payload: savedTodos });
+  }, [savedTodos]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (editMode) {
+      await axios.patch(endpoint + editToDo.id, { text: todoText });
       dispatch({ type: "edit", payload: { ...editToDo, text: todoText } });
       setEditMode(false);
       setEditToDo(null);
     } else {
-      dispatch({ type: "add", payload: todoText });
+      const newToDo = { id: uuidv4(), text: todoText };
+      await axios.post(endpoint, newToDo);
+      dispatch({ type: "add", payload: newToDo });
     }
     setTodoText("");
   };
@@ -38,6 +42,7 @@ const ToDoList = () => {
             type='text'
             placeholder='Enter To Do'
             onChange={(event) => setTodoText(event.target.value)}
+            value={todoText}
           />
         </Form.Group>
         <Button variant='primary' type='submit'>
@@ -63,7 +68,7 @@ const ToDoList = () => {
                   setEditToDo(todo);
                 }}
               >
-                Edit
+                <Button variant = 'link'>Edit</Button>
               </td>
               <td
                 onClick={async () => {
@@ -71,7 +76,7 @@ const ToDoList = () => {
                   dispatch({ type: "delete", payload: todo });
                 }}
               >
-                Delete
+                <Button variant="link">Delete</Button>
               </td>
             </tr>
           ))}

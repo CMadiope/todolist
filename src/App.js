@@ -9,8 +9,7 @@ function todosReducer(state, action) {
       return { ...state, todos: action.payload };
 
     case "add":
-      const newToDo = { id: uuidv4(), text: action.payload };
-      const addedToDos = [...state.todos, newToDo];
+      const addedToDos = [...state.todos, action.payload];
       return { ...state, todos: addedToDos };
     case "delete":
       const filteredTodoState = state.todos.filter(
