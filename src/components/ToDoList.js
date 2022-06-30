@@ -9,23 +9,22 @@ const ToDoList = () => {
   const { state, dispatch } = useContext(TodosContext);
   const [todoText, setTodoText] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [editToDo, setEditToDo] = useState(null);
+  const [editTodo, setEditTodo] = useState(null);
   const buttonTitle = editMode ? "Edit" : "Add";
 
-  const endpoint = "http://localhost:8000/todos";
+  const endpoint = "http://localhost:8000/todos/";
   const savedTodos = useAPI(endpoint);
 
   useEffect(() => {
     dispatch({ type: "get", payload: savedTodos });
   }, [savedTodos]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (editMode) {
-      await axios.patch(endpoint + editToDo.id, { text: todoText });
-      dispatch({ type: "edit", payload: { ...editToDo, text: todoText } });
+      await axios.patch(endpoint + editTodo.id, { text: todoText });
+      dispatch({ type: "edit", payload: { ...editTodo, text: todoText } });
       setEditMode(false);
-      setEditToDo(null);
+      setEditTodo(null);
     } else {
       const newToDo = { id: uuidv4(), text: todoText };
       await axios.post(endpoint, newToDo);
@@ -65,10 +64,10 @@ const ToDoList = () => {
                 onClick={() => {
                   setTodoText(todo.text);
                   setEditMode(true);
-                  setEditToDo(todo);
+                  setEditTodo(todo);
                 }}
               >
-                <Button variant = 'link'>Edit</Button>
+                <Button variant='link'>Edit</Button>
               </td>
               <td
                 onClick={async () => {
@@ -76,7 +75,7 @@ const ToDoList = () => {
                   dispatch({ type: "delete", payload: todo });
                 }}
               >
-                <Button variant="link">Delete</Button>
+                <Button variant='link'>Delete</Button>
               </td>
             </tr>
           ))}
