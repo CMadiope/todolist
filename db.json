@@ -1,7 +1,16 @@
 {
   "todos": [
-    { "id":1, "text": "finishing writing code"},
-    { "id":2, "text": "play video games"},
-    { "id":3, "text": "watch series"}
+    {
+      "id": 1,
+      "text": "finish writing code"
+    },
+    {
+      "id": 2,
+      "text": "play video games"
+    },
+    {
+      "id": 3,
+      "text": "watch series"
+    }
   ]
 }
