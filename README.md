@@ -7,3 +7,5 @@ a user should be albe to :
 
 react hooks were a major part of this project,  - useState, useContext and useReducer were use to make the project
 i also had to use react-bootsrap for some styling
+
+live demo: http://CMadiope.github.io/todolist
